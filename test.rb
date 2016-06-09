@@ -1,6 +1,12 @@
 #!/usr/bin/env ruby -I ../lib -I lib
 # coding: utf-8
+require 'rubygems'
 require 'sinatra'
+
+get '/test' do
+  "Hello from Sinatra on Heroku!"
+end
+
 set :server, 'thin'
 connections = []
 
