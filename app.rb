@@ -29,8 +29,9 @@ post '/charge' do
 end
 
 post '/contact' do
-  Pony.mail :to => 'tmoreton89@gmail.com',
-            :from => params[:email],
-            :subject => params[:subject],
-            :message => params[:message]
+	Pony.mail :to => 'tmoreton89@gmail.com',
+	        :from => params[:email],
+	        :subject => params[:subject],
+	        :message => params[:message]
+	response['Access-Control-Allow-Origin'] = 'http://tmoreton.github.io/ThinkBoldDesign/'
 end
