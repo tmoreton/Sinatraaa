@@ -1,18 +1,17 @@
 require 'sinatra'
 require 'stripe'
 
-set :publishable_key, ENV['pk_test_OxISGD7GxGhZCOofus3QFoW8']
-set :secret_key, ENV['sk_test_Cv1UxGFrtA7dBCrUWstCn5sA']
+set :publishable_key, ENV['PUBLISHABLE_KEY']
+set :secret_key, ENV['SECRET_KEY']
 
-# Stripe.api_key = settings.secret_key
-Stripe.api_key = 'sk_test_Cv1UxGFrtA7dBCrUWstCn5sA'
+Stripe.api_key = settings.secret_key
 
 get '/' do
   erb :index
 end
 
 post '/charge' do
-  @amount = 500
+  @amount = params[:amount]
 
   customer = Stripe::Customer.create(
     :email => params[:email],
@@ -26,5 +25,12 @@ post '/charge' do
     :customer    => customer
   )
 
-  redirect "http://tmoreton.github.io/ThinkBoldDesign/success.html"
+  redirect "http://tmoreton.github.io/ThinkBoldDesign?success"
+end
+
+post '/contact' do
+  Pony.mail :to => 'tmoreton89@gmail.com',
+            :from => params[:email],
+            :subject => params[:subject],
+            :message => params[:message]
 end
