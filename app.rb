@@ -15,16 +15,16 @@ post '/charge' do
   @amount = 500
 
   customer = Stripe::Customer.create(
-    :email => 'customer@example.com',
+    :email => params[:email],
     :card  => params[:stripeToken]
   )
 
   charge = Stripe::Charge.create(
     :amount      => @amount,
-    :description => 'Sinatra Charge',
+    :description => 'ThinkBoldDesign',
     :currency    => 'usd',
     :customer    => customer
   )
 
-  erb :charge
+  redirect "http://tmoreton.github.io/ThinkBoldDesign/success.html"
 end
