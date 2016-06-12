@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'stripe'
+require 'pony'
 
 set :publishable_key, ENV['PUBLISHABLE_KEY']
 set :secret_key, ENV['SECRET_KEY']
@@ -40,6 +41,9 @@ post '/contact' do
   @subject = params[:subject]
   @body = params[:message]
 
-  Pony.mail(:to => 'tmoreton89@gmail.com', :from => @email, :subject => @subject, :body => @body)
-
+  begin
+    Pony.mail(:to => 'tmoreton89@gmail.com', :from => @email, :subject => @subject, :body => @body)
+  rescue => e
+    puts e
+  end
 end
