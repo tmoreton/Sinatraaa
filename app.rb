@@ -10,8 +10,6 @@ Stripe.api_key = settings.secret_key
 before do
   headers['Access-Control-Allow-Methods'] = 'GET, POST'
   headers['Access-Control-Allow-Origin'] = '*'
-  # headers['Access-Control-Allow-Headers'] = 'accept, authorization, origin'
-  # headers['Access-Control-Allow-Credentials'] = 'true'
 end
 
 configure do
@@ -57,10 +55,11 @@ post '/contact' do
   @subject = params[:subject]
   @body = params[:message]
 
-  begin
-    Pony.mail(:to => 'tmoreton89@gmail.com', :from => @email, :subject => @subject, :body => @body)
-  rescue => e
-    puts e
-  end
+  Pony.mail(
+    :to => 'tmoreton89@gmail.com', 
+    :from => @email, 
+    :subject => @subject, 
+    :body => @body)
 
+  redirect "http://tmoreton.github.io/ThinkBoldDesign?contact"
 end
