@@ -41,5 +41,5 @@ post '/contact' do
 	        :subject => params[:subject],
 	        :message => params[:message]
 	# response['Access-Control-Allow-Origin'] = 'http://tmoreton.github.io'
-	# redirect "http://tmoreton.github.io/ThinkBoldDesign?success"
+	redirect "http://tmoreton.github.io/ThinkBoldDesign?success"
 end
