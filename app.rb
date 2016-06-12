@@ -40,7 +40,18 @@ post '/contact' do
   @email = params[:email]
   @subject = params[:subject]
   @body = params[:message]
-
+  Pony.options = {
+    :via => :smtp,
+    :via_options => {
+      :address => 'smtp.sendgrid.net',
+      :port => '587',
+      :domain => 'sinatraaa.herokuapp.com',
+      :user_name => ENV['SENDGRID_USERNAME'],
+      :password => ENV['SENDGRID_PASSWORD'],
+      :authentication => :plain,
+      :enable_starttls_auto => true
+    }
+  }
   begin
     Pony.mail(:to => 'tmoreton89@gmail.com', :from => @email, :subject => @subject, :body => @body)
   rescue => e
