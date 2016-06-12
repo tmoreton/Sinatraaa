@@ -14,6 +14,22 @@ before do
   # headers['Access-Control-Allow-Credentials'] = 'true'
 end
 
+configure do
+  Pony.options = {
+    :from => "noreply@thinkBigDesign.com",
+    :via => :smtp,
+    :via_options => {
+      :address => 'smtp.sendgrid.net',
+      :port => '587',
+      :domain => 'sinatraaa.herokuapp.com',
+      :user_name => ENV['SENDGRID_USERNAME'],
+      :password => ENV['SENDGRID_PASSWORD'],
+      :authentication => :plain,
+      :enable_starttls_auto => true
+    }
+  }
+end
+
 get '/' do
   erb :index
 end
@@ -40,21 +56,11 @@ post '/contact' do
   @email = params[:email]
   @subject = params[:subject]
   @body = params[:message]
-  Pony.options = {
-    :via => :smtp,
-    :via_options => {
-      :address => 'smtp.sendgrid.net',
-      :port => '587',
-      :domain => 'sinatraaa.herokuapp.com',
-      :user_name => ENV['SENDGRID_USERNAME'],
-      :password => ENV['SENDGRID_PASSWORD'],
-      :authentication => :plain,
-      :enable_starttls_auto => true
-    }
-  }
+
   begin
     Pony.mail(:to => 'tmoreton89@gmail.com', :from => @email, :subject => @subject, :body => @body)
   rescue => e
     puts e
   end
+
 end
