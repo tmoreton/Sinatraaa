@@ -47,7 +47,7 @@ post '/charge' do
     :customer    => customer
   )
 
-  redirect "https://tmoreton.github.io/ThinkBoldDesign?success"
+  redirect "https://tmoreton.github.io/ThinkBoldDesign/?success"
 end
 
 post '/contact' do
@@ -61,5 +61,5 @@ post '/contact' do
     :subject => @subject, 
     :body => @body)
 
-  redirect "https://tmoreton.github.io/ThinkBoldDesign?contact"
+  redirect "https://tmoreton.github.io/ThinkBoldDesign/?contact"
 end
